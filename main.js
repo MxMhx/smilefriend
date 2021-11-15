@@ -1,4 +1,5 @@
 let text = document.querySelector('.reply')
+let speech = document.querySelector('.speak')
 
 const recognition = new webkitSpeechRecognition()
 recognition.lang = 'th-TH'
@@ -18,6 +19,8 @@ recognition.addEventListener('end', () => {
     recognition.start();
 })
 
+
+//ฟังเสียง
 recognition.addEventListener('result', function (event) {
     const texts = Array.from(event.results)
         .map(result => result[0])
@@ -25,6 +28,8 @@ recognition.addEventListener('result', function (event) {
         .join(' ');
 
     console.log(texts);
+    speech.innerText = texts;
+
 
     //ทักทาย
     let greetingword = ['สวัสดี', 'ว่าไง', 'หวัดดี', 'ดีจ้า', 'ฮัลโหล','Smile','smile'];
