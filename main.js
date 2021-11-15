@@ -260,6 +260,11 @@ recognition.addEventListener('result', function (event) {
     if (texts.includes('Re')) {
         location.reload();
     }
+//github
+    if (texts.includes('github')) {
+        window.open('https://github.com/MxMhx?tab=repositories','_blank');
+        text.innerText = 'เปิดแล้วจ้า';
+    }
 }
 );
 
