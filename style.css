@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Righteous&family=Roboto:wght@100&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: rgb(77, 77, 77);
+}
+h1{
+    color: azure;
+    font-family: 'Righteous', cursive;
+    text-align: center;
+    font-size: 60px;
+    margin-top: 8%;
+    margin-bottom: 45px;
+}
+.reply{
+    text-align: left;
+    color: black;
+    font-family: 'Prompt', sans-serif;
+    background-color: azure;
+    width: 30%;
+    border-radius: 10px;
+    padding: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
+}
+.click{
+    color: white;
+}
