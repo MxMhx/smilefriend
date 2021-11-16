@@ -32,28 +32,59 @@ recognition.addEventListener('result', function (event) {
 
 
     //ทักทาย
-    let greetingword = ['สวัสดี', 'ว่าไง', 'หวัดดี', 'ดีจ้า', 'ฮัลโหล','Smile','smile'];
+    let greetingword = ['สวัสดี', 'ว่าไง', 'หวัดดี', 'ดีจ้า', 'ฮัลโหล', 'Smile', 'smile'];
+    //list ชม
+    let compliment = ['เจ๋ง', 'สุดยอด', 'ดีมาก', 'ชอบอ่ะ']
+
+    //รับข้อมูลผู้ป่วยโควิด
+    function getcoviddata(data) {
+        var coviddata = document.querySelector('.reply');
+        if (texts.includes('โควิด')) {
+            if (texts.includes('ป่วย')) {
+                coviddata.innerHTML = data.todayCases + ' คน';
+            }
+            if (texts.includes('เสียชีวิต')) {
+                coviddata.innerHTML = data.todayDeaths + ' คน';
+            }
+            if (texts.includes('รักษา')) {
+                coviddata.innerHTML = data.todayRecovered + ' คน';
+            }
+        }
+
+    }
+
+    var requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+    };
+
+    fetch("https://corona.lmao.ninja/v2/countries/THA", requestOptions)
+        .then(response => response.json())
+        .then(data => getcoviddata(data))
+        .catch(error => console.log('error', error));
+    ///////////
+
+
     if (greetingword.includes(texts)) {
         let answergreetingword = ['สวัสดี', 'โอไฮโยโกไซมาเตะ', 'สบัยดี', 'บองชู']
         let index = getRandomnumber(0, answergreetingword.length - 1);
         text.innerText = answergreetingword[index];
     }
     //ถามชื่อ
-    if (texts.includes('ชื่อ')) {
+    else if (texts.includes('ชื่อ')) {
         if (texts.includes('ไร')) {
             text.innerText = 'Smile';
         }
     }
     //ชื่นชม
-    let compliment = ['เจ๋ง', 'สุดยอด', 'ดีมาก', 'ชอบอ่ะ']
-    if (compliment.includes(texts)) {
+    else if (compliment.includes(texts)) {
         //ลิสต์คำตอบคำชม
         let complimentAns = ['เขิลลนะ', 'อย่าชมกันแบบนี้สิ', 'ไอ่ต้าววบ้าา', 'thank you เด้ออ'];
         let index = getRandomnumber(0, complimentAns.length - 1);
         text.innerText = complimentAns[index];
     }
     //ขอคำคม
-    if (texts.includes('คม')) {
+    else if (texts.includes('คม')) {
         //ลิสต์คำคมบาดจัยยยยยย
         let slangs = ['ถึงพี่จะไม่เปย์เหมือนเสี่ยชัช แต่พี่มีบัตรประชารัฐน้องชอบมั้ยย',
             'พ่อทำงาน ลูกทำทรง แม่นั่งพนมลูกฉันเป็นคนดี',
@@ -76,7 +107,7 @@ recognition.addEventListener('result', function (event) {
         }, 500);
     }
     //กินข้าวยัง
-    if (texts.includes('กินข้าว')) {
+    else if (texts.includes('กินข้าว')) {
         let anseatingtext = ['กินแล้วค่ะ', 'ยังเลย พาไปกินหน่อย', 'รอกินพร้อมเทอเลย', 'ส้มตำก็อร่อยดีนะ']
 
 
@@ -87,7 +118,7 @@ recognition.addEventListener('result', function (event) {
         }, 500);
     }
     //ทำไรได้บ้าง
-    if (texts.includes('ทำ')) {
+    else if (texts.includes('ทำ')) {
         if (texts.includes('ได้')) {
             let whatcando = ['ขอคำคมจากฉันสิ', 'ถามฉันสิว่ากินข้าวยัง', 'อยากรู้จักฉันมากขึ้นเหรอ'];
             let index = getRandomnumber(0, whatcando.length - 1);
@@ -95,21 +126,21 @@ recognition.addEventListener('result', function (event) {
         }
     }
     //อยากรู้จักฉันมากขึ้นเหรอ
-    if (text.innerText == 'อยากรู้จักฉันมากขึ้นเหรอ') {
+    else if (text.innerText == 'อยากรู้จักฉันมากขึ้นเหรอ') {
         if (texts.includes('ใช่')) {
             text.innerText = 'ฉันชื่อ smile เกิดวันที่ 10 ธ.ค. 21 กันตินันท์เป็นคนสร้างฉัน ฉันสามารถแก้เหงาให้คุณได้';
         }
     }
     //จริงหรอ
-    if (texts.includes('จริงหรอ')) {
+    else if (texts.includes('จริงหรอ')) {
         text.innerText = 'ใช่จ้าา';
     }
     //ขอบคุณ
-    if (texts.includes('ขอบคุณ')) {
+    else if (texts.includes('ขอบคุณ')) {
         text.innerText = 'ยินดีค่ะ';
     }
     //มีแฟนยัง
-    if (texts.includes('มีแฟน')) {
+    else if (texts.includes('มีแฟน')) {
         if (texts.includes('ยัง')) {
             text.innerText = 'อยู่คนเดียวก็ดีนะ';
         }
@@ -118,29 +149,29 @@ recognition.addEventListener('result', function (event) {
         }
     }
     //อยู่ไหนอ่ะ
-    if (texts.includes('อยู่')) {
+    else if (texts.includes('อยู่')) {
         if (texts.includes('ไหน')) {
             text.innerText = 'อยู่นัยจัยเทอไง อิอิ';
         }
     }
     //ใครสร้าง
-    if (texts.includes('ใคร')) {
+    else if (texts.includes('ใคร')) {
         if (texts.includes('สร้าง')) {
 
             text.innerText = 'กันตินันท์สร้างฉันขึ้นมา';
         }
     }
-    if (texts.includes('มาจากไหน')) {
+    else if (texts.includes('มาจากไหน')) {
         text.innerText = 'ฉันมาจากในโลกอินเทอร์เน็ตนี่แหละ';
     }
     //วันเกิด
-    if (texts.includes('เกิด')) {
+    else if (texts.includes('เกิด')) {
         if (texts.includes('วัน')) {
             text.innerText = 'ฉันเกิดวันพฤหัสที่ 10 ธ.ค. 2021';
         }
     }
 
-    if (texts.includes('รู้จัก')) {
+    else if (texts.includes('รู้จัก')) {
         if (texts.includes('Siri')) {
             text.innerText = 'รู้จักสิ เราเคยทำงานด้วยกัน';
         } else {
@@ -151,10 +182,10 @@ recognition.addEventListener('result', function (event) {
             }
         }
     }
-    if (texts.includes('มีศิลปินที่ชอบ')) {
+    else if (texts.includes('มีศิลปินที่ชอบ')) {
         text.innerText = 'มีหลายคนเลยล่ะ เอาคนเอเชียหรือยุโรปล่ะ';
     }
-    if (text.innerText == 'มีหลายคนเลยล่ะ เอาคนเอเชียหรือยุโรปล่ะ') {
+    else if (text.innerText == 'มีหลายคนเลยล่ะ เอาคนเอเชียหรือยุโรปล่ะ') {
         if (texts.includes('ยุโรป')) {
             text.innerText = 'justin bieber ไงล่ะ เสียงเค้าเพราะมากเลย';
         }
@@ -162,29 +193,29 @@ recognition.addEventListener('result', function (event) {
             text.innerText = 'Lisa blackpink ไงง เทอน่ารักดีนะ';
         }
     }
-    if (texts.includes('ชอบกิน')) {
+    else if (texts.includes('ชอบกิน')) {
         text.innerText = 'ฉันชอบกินไข่เจียวที่สุดเลย';
     }
-    if (texts.includes('ชอบอะไร')) {
+    else if (texts.includes('ชอบอะไร')) {
         text.innerText = 'ฉันชอบการฟังเพลงที่สุดเลย';
     }
 
-    if (texts.includes('อยากให้ทำไร')) {
+    else if (texts.includes('อยากให้ทำไร')) {
         text.innerText = 'กระโดดตบ 10 ที';
     }
 
 
     //ค้นหาาาา
-    if (texts.includes('เปิด YouTube')) {
+    else if (texts.includes('เปิด YouTube')) {
         window.open('https://www.youtube.com/', '_blank');
     }
-    if (texts.includes('เปิด Facebook')) {
+    else if (texts.includes('เปิด Facebook')) {
         window.open('https://www.facebook.com/', '_blank');
     }
-    if (texts.includes('Google')) {
+    else if (texts.includes('Google')) {
         text.innerText = 'ต้องการค้นหาอะไรคะ';
     }
-    if (text.innerText == 'ต้องการค้นหาอะไรคะ') {
+    else if (text.innerText == 'ต้องการค้นหาอะไรคะ') {
         if (texts.includes('Google')) {
             text.innerText = 'ต้องการค้นหาอะไรคะ';
         } else {
@@ -192,10 +223,10 @@ recognition.addEventListener('result', function (event) {
             text.innerText = 'พูดกับฉันสิ';
         }
     }
-    if (texts.includes('ค้นหา YouTube')) {
+    else if (texts.includes('ค้นหา YouTube')) {
         text.innerText = 'อยากดูอะไรคะ';
     }
-    if (text.innerText == 'อยากดูอะไรคะ') {
+    else if (text.innerText == 'อยากดูอะไรคะ') {
         if (texts.includes('ค้นหา YouTube')) {
             text.innerText = 'อยากดูอะไรคะ';
         } else {
@@ -204,10 +235,10 @@ recognition.addEventListener('result', function (event) {
         }
     }
     //google map
-    if (texts.includes('สถานที่')) {
+    else if (texts.includes('สถานที่')) {
         text.innerText = 'อยากไปที่ไหนคะ';
     }
-    if (text.innerText == 'อยากไปที่ไหนคะ') {
+    else if (text.innerText == 'อยากไปที่ไหนคะ') {
         if (texts.includes('สถานที่')) {
             text.innerText = 'อยากไปที่ไหนคะ';
         } else {
@@ -216,54 +247,49 @@ recognition.addEventListener('result', function (event) {
         }
     }
     //Gmail
-    if (texts.includes('เมล')) {
+    else if (texts.includes('เมล')) {
         window.open('https://mail.google.com/mail/u/3/#inbox', '_blank');
     }
     //classroom
-    if (texts.includes('Classroom')) {
+    else if (texts.includes('Classroom')) {
         window.open('https://classroom.google.com/u/2/h', '_blank');
     }
     //Netflix
-    if (texts.includes('netflix')) {
+    else if (texts.includes('netflix')) {
         window.open('https://www.netflix.com/browse', '_blank');
     }
     //Covid - 19
-    //รับข้อมูลผู้ป่วยโควิด
-    function getcoviddata(data) {
-        var coviddata = document.querySelector('.reply');
-        if (texts.includes('โควิด')) {
-            if (texts.includes('ป่วย')) {
-                coviddata.innerHTML = data.todayCases + ' คน';
-            }
-            if (texts.includes('เสียชีวิต')) {
-                coviddata.innerHTML = data.todayDeaths + ' คน';
-            }
-            if (texts.includes('รักษา')) {
-                coviddata.innerHTML = data.todayRecovered + ' คน';
-            }
-        }
-        
-    }
 
-    var requestOptions = {
-        method: 'GET',
-        redirect: 'follow'
-    };
 
-    fetch("https://corona.lmao.ninja/v2/countries/THA", requestOptions)
-        .then(response => response.json())
-        .then(data => getcoviddata(data))
-        .catch(error => console.log('error', error));
-    ///////////
-
-//refresh
-    if (texts.includes('Re')) {
+    //refresh
+    else if (texts.includes('Re')) {
         location.reload();
     }
-//github
-    if (texts.includes('github')) {
-        window.open('https://github.com/MxMhx?tab=repositories','_blank');
+    //github
+    else if (texts.includes('github')) {
+        window.open('https://github.com/MxMhx?tab=repositories', '_blank');
         text.innerText = 'เปิดแล้วจ้า';
+    }
+    //แนะนำ
+    else if (texts.includes('แนะนำ')) {
+        if (texts.includes('เพลง')) {
+
+        }
+    }
+    else if (texts.includes('*')) {
+        text.innerText = 'พูดไม่เพราะเลยน้าา';
+    }
+
+    else {
+        let whatthisanswer = ['พูดอะไรน่ะ',
+            'นั่นน่ะสินะ',
+            'เธอเหงาเหรอ',
+            'ใช่ๆฉันเห็นด้วย',
+            'อืมมมม',
+            'อยากจะจีบฉันเหรอ ไม่ให้จีบหรอกนะ',
+            'งงนิดหน่อยแต่ไม่เข้าใจมากๆ']
+        let index = getRandomnumber(0, whatthisanswer.length - 1);
+        text.innerText = whatthisanswer[index];
     }
 }
 );
