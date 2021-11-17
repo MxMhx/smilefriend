@@ -62,10 +62,17 @@ recognition.addEventListener('result', function (event) {
         .then(response => response.json())
         .then(data => getcoviddata(data))
         .catch(error => console.log('error', error));
-    ///////////
+    ///////////โควิด
+
 
 
     if (greetingword.includes(texts)) {
+        let answergreetingword = ['สวัสดี', 'โอไฮโยโกไซมาเตะ', 'สบัยดี', 'บองชู']
+        let index = getRandomnumber(0, answergreetingword.length - 1);
+        text.innerText = answergreetingword[index];
+    }
+
+    else if (texts.includes('สวัสดี')) {
         let answergreetingword = ['สวัสดี', 'โอไฮโยโกไซมาเตะ', 'สบัยดี', 'บองชู']
         let index = getRandomnumber(0, answergreetingword.length - 1);
         text.innerText = answergreetingword[index];
@@ -101,10 +108,10 @@ recognition.addEventListener('result', function (event) {
 
 
         let index = getRandomnumber(0, slangs.length - 1);
-        setTimeout(function () {
-            //your code to be executed after 1 second
-            text.innerText = slangs[index];
-        }, 500);
+        // setTimeout(function () {
+        //     //your code to be executed after 1 second
+        text.innerText = slangs[index];
+        // }, 500);
     }
     //กินข้าวยัง
     else if (texts.includes('กินข้าว')) {
@@ -279,7 +286,35 @@ recognition.addEventListener('result', function (event) {
     else if (texts.includes('*')) {
         text.innerText = 'พูดไม่เพราะเลยน้าา';
     }
+    //Test youtube open music
+    else if (texts.includes('เปิดเพลง')) {
+        text.innerText = 'ฟังเพลงอะไรดีคะ';
+    }
+    else if (text.innerText == 'ฟังเพลงอะไรดีคะ') {
+        if (texts.includes('เปิดเพลง')) {
+            text.innerText = 'ฟังเพลงอะไรดีคะ';
+        } else {
+            var API_KEY = "AIzaSyCTltzrpYJH3fMbSa8ovgmwGGfZiB86hJ4";
 
+            event.preventDefault()
+            videoSearch(API_KEY, texts, 2)
+
+
+            function videoSearch(key, texts, maxResults) {
+                $.get("https://www.googleapis.com/youtube/v3/search?part=snippet&key=" + key + "&type=video&maxResults=" + maxResults + "&q=" + texts, function (dataed) {
+                    const videos = dataed.items[0].id.videoId
+                    console.log(videos);
+
+                    window.open('https://www.youtube.com/watch?v=' + videos, '_blank')
+
+                })
+            }
+            text.innerText = 'พูดกับฉันสิ';
+        }
+    }
+
+
+    //อะไรก็ไม่รู้
     else {
         let whatthisanswer = ['พูดอะไรน่ะ',
             'นั่นน่ะสินะ',
@@ -287,7 +322,9 @@ recognition.addEventListener('result', function (event) {
             'ใช่ๆฉันเห็นด้วย',
             'อืมมมม',
             'อยากจะจีบฉันเหรอ ไม่ให้จีบหรอกนะ',
-            'งงนิดหน่อยแต่ไม่เข้าใจมากๆ']
+            'งงนิดหน่อยแต่ไม่เข้าใจมากๆ',
+            'ไม่รู้สิ',
+            'แล้วนายว่าไงอ่ะ']
         let index = getRandomnumber(0, whatthisanswer.length - 1);
         text.innerText = whatthisanswer[index];
     }
@@ -295,3 +332,4 @@ recognition.addEventListener('result', function (event) {
 );
 
 recognition.start()
+//git add . && git commit -m "first commit" && git push
